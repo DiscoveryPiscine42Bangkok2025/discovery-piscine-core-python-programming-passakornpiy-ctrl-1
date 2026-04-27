@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
-# # # This is probably an excessive amount of comments but I figured I should explain it right now so I don't stutter later. -ppiyayop
+# # # This is probably an excessive amount of comments but I figured I should explain it right now so I don't stutter later. -ppiyayop//
+
+# fixing needed : diaganol piece blocking
 
 def checkKing(stri, piece, pos, lineCount):
     # Find if the king is in check
     match (piece):
         case 'P':
+            # # # I don't think pawn needs a seperate function//
             checkPos = pos - lineCount
             if (checkPos < 0):
                 return False
@@ -27,6 +30,63 @@ def checkKing(stri, piece, pos, lineCount):
     return False
 
 def checkDiagonal(stri, lineCount, pos): # idk how this works i just winged it
+    #up left
+    for i in range(1, lineCount):
+        checking = (pos - (lineCount * i)) - i
+        noLessThan = ((lineCount - i) - 1) * lineCount
+        noMoreThan = (lineCount - i) * lineCount
+        # print(lineCount * lineCount, "i", i, "lines",  lineCount, "positions", checking, noMoreThan, noLessThan)
+        if (checking < 0 or checking < noLessThan or checking >= noMoreThan):
+            break
+        if (stri[checking] != "."):
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
+    # up right
+    for i in range(1, lineCount):
+        checking = (pos - (lineCount * i)) + i
+        noLessThan = ((lineCount - i) - 1) * lineCount
+        noMoreThan = (lineCount - i) * lineCount
+        # print(lineCount * lineCount, "i", i, "lines",  lineCount, "positions", checking, noMoreThan, noLessThan)
+        if (checking < 0 or checking < noLessThan or checking >= noMoreThan):
+            break
+        if (stri[checking] != "."):
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
+    # down left
+    for i in range(1, lineCount):
+        checking = (pos + (lineCount * i)) - i
+        noLessThan = i * lineCount
+        noMoreThan = (i + 1) * lineCount
+        # print(lineCount * lineCount, "i", i, "lines",  lineCount, "positions", checking, noMoreThan, noLessThan)
+        if (checking < 0 or checking < noLessThan or checking >= noMoreThan):
+            break
+        if (stri[checking] != "."):
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
+    # down left
+    for i in range(1, lineCount):
+        checking = (pos + (lineCount * i)) + i
+        noLessThan = i * lineCount
+        noMoreThan = (i + 1) * lineCount
+        # print(lineCount * lineCount, "i", i, "lines",  lineCount, "positions", checking, noMoreThan, noLessThan)
+        if (checking < 0 or checking < noLessThan or checking >= noMoreThan):
+            break
+        if (stri[checking] != "."):
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
+    """
     for i in range(1, lineCount):
         upperCell = pos - (lineCount * i)
         lowerCell = pos + (lineCount * i)
@@ -40,38 +100,86 @@ def checkDiagonal(stri, lineCount, pos): # idk how this works i just winged it
         noLessThanLow = (lowerCell // lineCount) * lineCount
         noMoreThanLow = ((lowerCell // lineCount) + 1) * lineCount
         # print(lineCount * lineCount, "i", i, "lines",  lineCount, "upper", upperCell, "lower", lowerCell, "up check", upCheck1, upCheck2, noLessThanUp, noMoreThanUp, "low check", lowCheck1, lowCheck2, noLessThanLow, noMoreThanLow)
-        if (noLessThanUp >= 0 and upCheck1 >= noLessThanUp and upCheck1 < noMoreThanUp and stri[upCheck1] == "K"):
-            # print("UPCHECK1", upCheck1)
-            return True
-        if (noLessThanUp >= 0 and upCheck2 >= noLessThanUp and upCheck2 < noMoreThanUp and stri[upCheck2] == "K"):
+        if (noLessThanUp >= 0 and upCheck1 >= noLessThanUp and upCheck1 < noMoreThanUp and stri[upCheck1] != "."):
+            match stri[upCheck1]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    return False
+                case 'K':
+                    return True
+        if (noLessThanUp >= 0 and upCheck2 >= noLessThanUp and upCheck2 < noMoreThanUp and stri[upCheck2] != "."):
             # print("UPCHECK2", upCheck2)
-            return True
-        if (noMoreThanLow <= lineCount * lineCount and lowCheck1 < noMoreThanLow and lowCheck1 >= noLessThanLow and stri[lowCheck1] == "K"):
+            match stri[upCheck2]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    return False
+                case 'K':
+                    return True
+        if (noMoreThanLow <= lineCount * lineCount and lowCheck1 < noMoreThanLow and lowCheck1 >= noLessThanLow and stri[lowCheck1] != "."):
             # print("LOWCHECK1", lowCheck1)
-            return True
-        if (noMoreThanLow <= lineCount * lineCount and lowCheck2 < noMoreThanLow and lowCheck2 >= noLessThanLow and stri[lowCheck2] == "K"):
+            match stri[lowCheck1]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    return False
+                case 'K':
+                    return True
+        if (noMoreThanLow <= lineCount * lineCount and lowCheck2 < noMoreThanLow and lowCheck2 >= noLessThanLow and stri[lowCheck2] != "."):
             # print("LOWCHECK2", lowCheck2)
-            return True
+            match stri[lowCheck2]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    return False
+                case 'K':
+                    return True
     return False
+    """
 
 def checkHorizontal(stri, lineCount, pos):
     column = (pos) // lineCount
-    for i in range(lineCount):
-        checking = (column * lineCount) + i
-        # print(column, checking)
-        if (stri[checking] == "K"):
+    noLessThan = (column) * (lineCount)
+    noMoreThan = (column + 1) * (lineCount)
+    for i in range(1, lineCount):
+        checking = pos + i
+        # print(lineCount, column, noLessThan, noMoreThan, checking)
+        if (checking >= noMoreThan):
+            break
+        if (stri[checking] != "."):
             # print("horizontal")
-            return True
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
+    # print("switch side")
+    for i in range(1, lineCount):
+        checking = pos - i
+        # print(lineCount, column, noLessThan, noMoreThan, checking)
+        if (checking < noLessThan):
+            break
+        if (stri[checking] != "."):
+            # print("horizontal")
+            match stri[checking]:
+                case 'P' | 'B' | 'R' | 'Q':
+                    break
+                case 'K':
+                    return True
     return False
 
 def checkVertical(stri, lineCount, pos): # i fucked this up big time yet it works??
-    for i in range(lineCount):
-        checkPos = (lineCount * i) + (pos % lineCount)
-        # print(checkPos)
-        if (checkPos <= (lineCount * i) + (pos % lineCount) and stri[checkPos] == "K"):
-            # print("-", checkPos)
-            return True
-    return False
+    for i in range(1, lineCount):
+        checkPos1 = pos - (lineCount * i)
+        # print(checkPos1)
+        if (checkPos1 >= 0 and stri[checkPos1] != "."):
+            # print("-", checkPos1)
+            match stri[checkPos1]:
+                case 'K':
+                    return True
+            break
+    for i in range(1, lineCount):
+        checkPos2 = pos + (lineCount * i)
+        # print(checkPos2)
+        if (checkPos2 < lineCount * lineCount and stri[checkPos2] != "."):
+            # print("-", checkPos2)
+            match stri[checkPos2]:
+                case 'K':
+                    return True
+            break
 
 def checkmate(stri):
     # # # Checking if it's a square
@@ -94,16 +202,19 @@ def checkmate(stri):
                 inCheck = checkKing(board ,board[index], index, lineCount)
                 if (inCheck == True):
                     print("Success")
-                return
+                    return
     print("Fail")
     return
 def main():
     board = """\
-....Q
-.....
-.....
-.....
-K....\
+........
+........
+........
+........
+........
+........
+........
+...K....\
 """
     # board = input()
     checkmate(board)
