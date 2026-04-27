@@ -190,7 +190,7 @@ def checkmate(stri):
 """)) + 1)
     letterCount = len(stri) - lineCount + 1
     if (lineCount * lineCount != letterCount):
-        print("This is not a square. Please input an actual square.")
+        print("Error")
         return
     
     # # # Making the board a straight line
