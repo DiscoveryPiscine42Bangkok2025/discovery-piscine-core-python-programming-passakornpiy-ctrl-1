@@ -72,7 +72,7 @@ def checkDiagonal(stri, lineCount, pos): # idk how this works i just winged it
                     break
                 case 'K':
                     return True
-    # down left
+    # down right
     for i in range(1, lineCount):
         checking = (pos + (lineCount * i)) + i
         noLessThan = i * lineCount
@@ -87,6 +87,9 @@ def checkDiagonal(stri, lineCount, pos): # idk how this works i just winged it
                 case 'K':
                     return True
     """
+    ignore this
+    this is old code
+
     for i in range(1, lineCount):
         upperCell = pos - (lineCount * i)
         lowerCell = pos + (lineCount * i)
