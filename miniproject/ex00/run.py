@@ -26,7 +26,7 @@ def checkKing(stri, piece, pos, lineCount):
             return inCheck
     return False
 
-def checkDiagonal(stri, lineCount, pos): # # idk how this works i just winged it
+def checkDiagonal(stri, lineCount, pos): # idk how this works i just winged it
     for i in range(1, lineCount):
         upperCell = pos - (lineCount * i)
         lowerCell = pos + (lineCount * i)
